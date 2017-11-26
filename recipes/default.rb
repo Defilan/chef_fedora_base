@@ -35,11 +35,31 @@ end
   package temppackage
 end
 
+package 'docker' do
+  action :install
+  notifies :create, 'group[docker]', :immediately
+end
+
+group 'docker' do
+  action :nothing
+end
+
+hab_install 'install habitat'
+
 node['etc']['passwd'].each do |user, data|
   next unless data['gid'].to_i >= 1000
+
+  group 'docker' do
+    action :modify
+    members user
+    append true
+  end
+
   git "#{data['dir']}/.oh-my-zsh" do
     repository 'git://github.com/robbyrussell/oh-my-zsh.git'
     action :sync
+    user user
+    group data['gid']
   end
 
   template "#{data['dir']}/.zshrc" do
@@ -64,4 +84,9 @@ node['etc']['passwd'].each do |user, data|
     user user
     group data['gid']
   end
+end
+
+# Making sure docker is enabled and running
+service 'docker' do
+  action [:enable, :start]
 end

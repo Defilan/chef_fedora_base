@@ -4,10 +4,11 @@ maintainer_email 'defilan@gmail.com'
 license 'MIT'
 description 'Installs/Configures chef_fedora_base'
 long_description 'Installs/Configures chef_fedora_base'
-version '0.1.1'
+version '0.1.2'
 chef_version '>= 12.1' if respond_to?(:chef_version)
-
+depends 'habitat', '~> 0.39.0'
 depends 'chef-ingredient', '~> 2.1.11'
+
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
 # uploaded to a Supermarket.
