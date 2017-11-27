@@ -1,0 +1,33 @@
+---
+driver:
+  name: dokken
+  chef_version: current
+  privileged: true
+  volumes: [ '/var/lib/docker']
+
+provisioner:
+  name: dokken
+  deprecations_as_errors: true
+
+transport:
+  name: dokken
+
+verifier:
+  name: inspec
+  sudo: true
+
+platforms:
+  - name: fedora
+    driver:
+      image: dokken/fedora-latest
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+
+suites:
+  - name: default
+    run_list:
+      - recipe[chef_fedora_base::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
