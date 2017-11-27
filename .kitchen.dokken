@@ -1,27 +1,23 @@
----
 driver:
   name: dokken
-  chef_version: current
-  privileged: true
-  volumes: [ '/var/lib/docker']
+  privileged: true # because Docker and SystemD/Upstart
+  chef_version: <%= ENV['CHEF_VERSION'] || 'current' %>
+
+transport:
+  name: dokken
 
 provisioner:
   name: dokken
   deprecations_as_errors: true
 
-transport:
-  name: dokken
-
 verifier:
   name: inspec
-  sudo: true
 
 platforms:
-  - name: fedora
-    driver:
-      image: dokken/fedora-latest
-      platform: rhel
-      pid_one_command: /usr/lib/systemd/systemd
+- name: fedora-latest
+  driver:
+    image: dokken/fedora-latest
+	pid_one_command: /usr/lib/systemd/systemd
 
 suites:
   - name: default
