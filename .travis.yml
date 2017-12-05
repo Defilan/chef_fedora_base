@@ -33,5 +33,6 @@ script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 matrix:
   include:
     - script:
+      - export KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
       - chef exec delivery local all
 env: UNIT_AND_LINT=1
