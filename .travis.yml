@@ -28,5 +28,8 @@ matrix:
   include:
     - script:
       - export KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
-      - chef exec delivery local all
+      - chef exec delivery local unit
+      - chef exec delivery local syntax
+      - chef exec delivery local lint
+      - chef exec kitchen test
 env: UNIT_AND_LINT=1
