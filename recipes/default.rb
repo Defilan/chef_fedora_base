@@ -56,7 +56,7 @@ node['etc']['passwd'].each do |user, data|
   end
 
   git "#{data['dir']}/.oh-my-zsh" do
-    repository 'git://github.com/robbyrussell/oh-my-zsh.git'
+    repository 'https://github.com/robbyrussell/oh-my-zsh.git'
     action :sync
     user user
     group data['gid']
