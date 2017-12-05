@@ -9,6 +9,13 @@
   package temppackage
 end
 
+# OpenSSH Server and Service
+package 'openssh-server'
+
+service 'sshd' do
+  action [:enable, :start]
+end
+
 # Install Vagrant and VirtualBox for local cookbook development
 remote_file 'vagrant_file' do
   path "#{Chef::Config['file_cache_path']}/vagrant_#{node['chef_fedora_base']['vagrant_version']}_x86_64.rpm"

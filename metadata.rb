@@ -4,7 +4,7 @@ maintainer_email 'defilan@gmail.com'
 license 'MIT'
 description 'Installs/Configures chef_fedora_base'
 long_description 'Installs/Configures chef_fedora_base'
-version '0.1.4'
+version '0.1.5'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 depends 'habitat', '~> 0.39.0'
 depends 'chef-ingredient', '~> 2.1.11'
