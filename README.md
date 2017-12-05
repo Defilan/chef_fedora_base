@@ -7,11 +7,11 @@ This is a Chef cookbook that helps configure Fedora based Chef/Ruby developer bo
 ## Scope
 
 This cookbook installs a set of applications and tools that are used by Christopher Maher (Defilan) as a developer
-config. This includes tools such as Neovim, Docker, ChefDK, Vagrant, VirtualBox, etc.
+config. This includes tools such as Habitat, Neovim, Docker, ChefDK, Vagrant, VirtualBox, etc.
 
 ## Requirements
 
-- Chef 12.7 or later
+- Chef 13 or later
 - Network access for package and git repo downloads
 
 ## Platform Support
@@ -29,7 +29,7 @@ Please submit pull requests with fixes or ideas for improvement. FOSS is all abo
 
 ## Maintainers
 
--Christopher Maher ([defilan@gmail.com](mailto:defilan@gmai.com))
+- Christopher Maher ([defilan@gmail.com](mailto:defilan@gmai.com))
 
 ## License
 
