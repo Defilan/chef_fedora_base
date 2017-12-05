@@ -16,8 +16,8 @@ config. This includes tools such as Neovim, Docker, ChefDK, Vagrant, VirtualBox,
 
 ## Platform Support
 
--Fedora 26
--Fedora 27
+- Fedora 26
+- Fedora 27
 
 # Cookbook Dependencies
 
