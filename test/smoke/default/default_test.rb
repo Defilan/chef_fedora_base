@@ -15,10 +15,12 @@ describe group('docker') do
   it { should exist }
 end
 
-describe service('docker') do
-  it { should be_installed }
-  it { should be_enabled }
-  it { should be_running }
+%w(docker sshd).each do |stuffy|
+  describe service(stuffy) do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
 end
 
 describe file('/bin/hab') do
