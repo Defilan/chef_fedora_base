@@ -29,7 +29,7 @@ Please submit pull requests with fixes or ideas for improvement. FOSS is all abo
 
 ## Maintainers
 
-- Christopher Maher ([defilan@gmail.com](mailto:defilan@gmai.com))
+- Christopher Maher ([defilan@gmail.com](mailto:defilan@gmail.com))
 
 ## License
 

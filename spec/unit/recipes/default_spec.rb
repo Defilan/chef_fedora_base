@@ -18,5 +18,10 @@ describe 'chef_fedora_base::default' do
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
+
+    it 'install hab and chefdk' do
+      expect(chef_run).to install_hab_install('install habitat')
+      expect(chef_run).to install_chef_ingredient('chefdk')
+    end
   end
 end
