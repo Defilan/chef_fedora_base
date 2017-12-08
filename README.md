@@ -19,7 +19,7 @@ config. This includes tools such as Habitat, Neovim, Docker, ChefDK, Vagrant, Vi
 - Fedora 26
 - Fedora 27
 
-# Cookbook Dependencies
+## Cookbook Dependencies
 
 This cookbook is dependant on the habitat and chef-ingredient cookbooks.
 
@@ -29,7 +29,7 @@ Please submit pull requests with fixes or ideas for improvement. FOSS is all abo
 
 ## Maintainers
 
-- Christopher Maher ([defilan@gmail.com](mailto:defilan@gmai.com))
+- Christopher Maher ([defilan@gmail.com](mailto:defilan@gmail.com))
 
 ## License
 

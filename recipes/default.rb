@@ -5,7 +5,7 @@
 # Copyright:: 2017, Christopher Maher, MIT
 
 # Development tools
-%w(sudo util-linux-user git make automake gcc gcc-c++ kernel-devel).each do |temppackage|
+%w(sudo powertop gnupg util-linux-user git make automake gcc gcc-c++ kernel-devel).each do |temppackage|
   package temppackage
 end
 
@@ -56,6 +56,27 @@ hab_install 'install habitat'
 node['etc']['passwd'].each do |user, data|
   next unless data['gid'].to_i >= 1000
 
+  directory 'gnupg permissions' do
+    path "#{data['dir']}/.gnupg"
+    recursive true
+    action :nothing
+  end
+
+  execute "rvm instal #{user}" do
+    command '\curl -sSL https://get.rvm.io | bash'
+    user user
+    not_if { ::File.exist?("/home/#{user}/.rvm") }
+    notifies :delete, 'directory[gnupg permissions]', :before
+    notifies :run, 'execute[gpg keys]', :before
+  end
+
+  execute 'gpg keys' do
+    command 'gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB'
+    environment 'HOME' => (data['dir']).to_s
+    user user
+    action :nothing
+  end
+
   group 'docker' do
     action :modify
     members user
@@ -91,9 +112,27 @@ node['etc']['passwd'].each do |user, data|
     user user
     group data['gid']
   end
-end
 
+  directory "#{data['dir']}/.tmux/plugins" do
+    recursive true
+    user user
+    group data['gid']
+  end
+
+  git "#{data['dir']}/.tmux/plugins/tpm" do
+    repository 'https://github.com/tmux-plugins/tpm'
+    action :sync
+    user user
+    group data['gid']
+  end
+end
 # Making sure docker is enabled and running
 service 'docker' do
   action [:enable, :start]
+end
+
+# Configure GNOME to use x11 instead of wayland (for zoom.us)
+template '/etc/gdm/custom.conf' do
+  source 'custom.conf.erb'
+  only_if { ::File.exist?('/etc/gdm/custom.conf') }
 end
