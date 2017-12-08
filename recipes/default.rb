@@ -62,7 +62,7 @@ node['etc']['passwd'].each do |user, data|
     action :nothing
   end
 
-  execute 'rvm install' do
+  execute "rvm instal #{user}" do
     command '\curl -sSL https://get.rvm.io | bash'
     user user
     not_if { ::File.exist?("/home/#{user}/.rvm") }
