@@ -6,7 +6,7 @@ description 'Installs/Configures chef_fedora_base'
 long_description 'Installs/Configures chef_fedora_base'
 version '0.1.6'
 chef_version '>= 12.1' if respond_to?(:chef_version)
-depends 'habitat', '~> 0.39.0'
+depends 'habitat', '~> 0.50.3'
 depends 'chef-ingredient', '~> 2.1.11'
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
