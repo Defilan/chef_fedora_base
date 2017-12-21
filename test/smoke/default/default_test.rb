@@ -5,7 +5,7 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
 
-%w(sudo powertop gnupg vagrant docker chefdk VirtualBox-5.2 util-linux-user git make automake gcc gcc-c++ kernel-devel zsh zsh-syntax-highlighting neovim tmux).each do |temppackage|
+%w(sudo powertop gnupg vagrant docker-ce chefdk VirtualBox-5.2 util-linux-user git make automake gcc gcc-c++ kernel-devel zsh zsh-syntax-highlighting neovim tmux).each do |temppackage|
   describe package(temppackage) do
     it { should be_installed }
   end
@@ -27,4 +27,9 @@ describe file('/bin/hab') do
   it { should exist }
   it { should be_file }
   it { should be_executable }
+end
+
+describe file('/etc/gdm/custom.conf') do
+  it { should exist }
+  it { should be_file }
 end
