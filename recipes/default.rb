@@ -38,17 +38,28 @@ package 'VirtualBox-5.2'
 chef_ingredient 'chefdk'
 
 # User Specific Tweaks (NVIM, dotfiles, etc)
-%w(zsh zsh-syntax-highlighting neovim tmux).each do |temppackage|
+%w(zsh zsh-syntax-highlighting neovim tmux gnome-tweak-tool).each do |temppackage|
   package temppackage
 end
 
-package 'docker' do
-  action :install
-  notifies :create, 'group[docker]', :immediately
+# Install Docker
+remote_file 'docker-ce' do
+  path "#{Chef::Config['file_cache_path']}/docker.rpm"
+  source node['chef_fedora_base']['docker_url']
+  action :create
 end
 
-group 'docker' do
-  action :nothing
+package 'docker-ce' do
+  source "#{Chef::Config['file_cache_path']}/docker.rpm"
+end
+
+git "#{Chef::Config['file_cache_path']}/.oh-my-zsh" do
+  repository 'https://github.com/robbyrussell/oh-my-zsh.git'
+  action :sync
+end
+
+directory "#{Chef::Config['file_cache_path']}/.oh-my-zsh" do
+  mode '0755'
 end
 
 hab_install 'install habitat'
@@ -56,13 +67,19 @@ hab_install 'install habitat'
 node['etc']['passwd'].each do |user, data|
   next unless data['gid'].to_i >= 1000
 
+  user 'user modify' do
+    shell '/bin/zsh'
+    username user
+    action :modify
+  end
+
   directory 'gnupg permissions' do
     path "#{data['dir']}/.gnupg"
     recursive true
     action :nothing
   end
 
-  execute "rvm instal #{user}" do
+  execute "rvm install #{user}" do
     command '\curl -sSL https://get.rvm.io | bash'
     user user
     not_if { ::File.exist?("/home/#{user}/.rvm") }
@@ -83,11 +100,13 @@ node['etc']['passwd'].each do |user, data|
     append true
   end
 
-  git "#{data['dir']}/.oh-my-zsh" do
-    repository 'https://github.com/robbyrussell/oh-my-zsh.git'
-    action :sync
+  execute "#{user} install-oh-my-zsh" do
+    command "bash #{Chef::Config['file_cache_path']}/.oh-my-zsh/tools/install.sh"
+    action :run
     user user
     group data['gid']
+    live_stream true
+    not_if { ::File.exist?("#{data['dir']}/.oh-my-zsh") }
   end
 
   template "#{data['dir']}/.zshrc" do
@@ -98,12 +117,6 @@ node['etc']['passwd'].each do |user, data|
     variables(
       user: user
     )
-  end
-
-  user 'user modify' do
-    shell '/bin/zsh'
-    username user
-    action :modify
   end
 
   git "#{data['dir']}/.dotfiles" do
@@ -126,6 +139,7 @@ node['etc']['passwd'].each do |user, data|
     group data['gid']
   end
 end
+
 # Making sure docker is enabled and running
 service 'docker' do
   action [:enable, :start]
