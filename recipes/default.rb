@@ -73,27 +73,6 @@ node['etc']['passwd'].each do |user, data|
     action :modify
   end
 
-  directory 'gnupg permissions' do
-    path "#{data['dir']}/.gnupg"
-    recursive true
-    action :nothing
-  end
-
-  execute "rvm install #{user}" do
-    command '\curl -sSL https://get.rvm.io | bash'
-    user user
-    not_if { ::File.exist?("/home/#{user}/.rvm") }
-    notifies :delete, 'directory[gnupg permissions]', :before
-    notifies :run, 'execute[gpg keys]', :before
-  end
-
-  execute 'gpg keys' do
-    command 'gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB'
-    environment 'HOME' => (data['dir']).to_s
-    user user
-    action :nothing
-  end
-
   group 'docker' do
     action :modify
     members user
