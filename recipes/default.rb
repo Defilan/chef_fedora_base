@@ -5,7 +5,7 @@
 # Copyright:: 2017, Christopher Maher, MIT
 
 # Development tools
-%w(sudo powertop gnupg util-linux-user git make automake gcc gcc-c++ kernel-devel).each do |temppackage|
+%w(sudo powertop gnupg util-linux-user git make automake gcc gcc-c++ kernel-devel dkms).each do |temppackage|
   package temppackage
 end
 
