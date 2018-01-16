@@ -1,6 +1,6 @@
 # Fedora Base Cookbook
 
-[![Build Status](https://travis-ci.org/Defilan/chef_fedora_base.svg?branch=master)](https://travis-ci.org/Defilan/chef_fedora_base) [![Cookbook Version](https://img.shields.io/badge/cookbook-0.1.2-blue.svg)](https://supermarket.chef.io/cookbooks/chef_fedora_base)
+[![Build Status](https://travis-ci.org/Defilan/chef_fedora_base.svg?branch=master)](https://travis-ci.org/Defilan/chef_fedora_base) [![Cookbook Version](https://img.shields.io/badge/cookbook-0.1.2-blue.svg)](https://supermarket.chef.io/cookbooks/chef_fedora_base) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://choosealicense.com/licenses/mit)
 
 This is a Chef cookbook that helps configure Fedora based Chef/Ruby developer boxes
 
