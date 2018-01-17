@@ -12,3 +12,5 @@ This file is used to list changes made in each version of the chef_fedora_base c
 
 - Remove buggy RVM install
 
+## 0.1.2 (2018-1-16)
+- Add DKMS package needed for VirtualBox
